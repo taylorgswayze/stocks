@@ -1,5 +1,8 @@
 import csv
 import time
+import requests
+import json
+
 
 
 api_rows = []
@@ -7,7 +10,12 @@ with open('30DayByMinute.csv') as file:
     csv_reader = csv.reader(file, delimiter=',')
     line_count = 0
     for row in csv_reader:
-        api_rows.append(row)
+        api_rows.append(str(row).strip("['").strip("']"))
         line_count += 1
 
-    print(api_rows[5)
+
+    for url in api_rows:
+        data = requests.get(url)
+        print(data.json())
+        print(str(url))
+

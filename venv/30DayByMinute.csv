@@ -1,4 +1,4 @@
-﻿https://api.iextrading.com/1.0/stock/AAPL/chart/date/20181221
+https://api.iextrading.com/1.0/stock/AAPL/chart/date/20181221
 https://api.iextrading.com/1.0/stock/AAPL/chart/date/20181220
 https://api.iextrading.com/1.0/stock/AAPL/chart/date/20181219
 https://api.iextrading.com/1.0/stock/AAPL/chart/date/20181218
@@ -2620,5 +2620,3 @@ https://api.iextrading.com/1.0/stock/ZNGA/chart/date/20181126
 https://api.iextrading.com/1.0/stock/ZNGA/chart/date/20181125
 https://api.iextrading.com/1.0/stock/ZNGA/chart/date/20181122
 https://api.iextrading.com/1.0/stock/ZNGA/chart/date/20181121
-
-
