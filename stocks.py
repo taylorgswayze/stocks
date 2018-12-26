@@ -3,29 +3,30 @@ import time
 from datetime import date, timedelta
 import requests
 import json
+from datetime import date, timedelta
 
-#date = time.strftime('%Y%m%d')
-yesterday = date.today() - timedelta(3)
-date2 = yesterday.strftime('%Y%m%d')
-print(date)
+def daterange(date1, date2):
+    for n in range(int ((date2 - date1).days)+1):
+        yield date1 + timedelta(n)
+
+start_dt = date(2018, 12, 20)
+end_dt = date(2018, 12, 21)
 
 tickers = ['AAPL', 'ABT', 'ABX', 'AES', 'AIG', 'AKS', 'AMAT', 'AMD', 'ATVI', 'AUY', 'AVP', 'AXP', 'BA', 'BAC', 'BB', 'BBD', 'BILI', 'BK', 'BSX', 'BVN', 'C', 'CAG', 'CAT', 'CE', 'CHK', 'COP', 'CSCO', 'CTL', 'CVS', 'CVX', 'DIS', 'DNR', 'DVN', 'DWDP', 'ECA', 'ERIC', 'ESV', 'F', 'FB', 'FCX', 'GE', 'GFI', 'GG', 'GM', 'GNW', 'GS', 'HAL', 'HD', 'HMNY', 'HPE', 'HPQ', 'IBM', 'INFY', 'INTC', 'JNJ', 'JPM', 'KEY', 'KGC', 'KO', 'LYG', 'MCD', 'MGM', 'MMM', 'MO', 'MRIN', 'MRK', 'MRO', 'MS', 'MSFT', 'MU', 'NBR', 'NEM', 'NKE', 'NLST', 'NLY', 'NOK', 'NVDA', 'ORCL', 'PBR', 'PFE', 'PG', 'PM', 'PPL', 'QCOM', 'RAD', 'RF', 'RIG', 'S', 'SLB', 'SMCI', 'SNAP', 'SQ', 'SWN', 'SYMC', 'T', 'TRV', 'TSM', 'TWTR', 'TXN', 'UNH', 'USB', 'UTX', 'V', 'VALE', 'VZ', 'WBA', 'WFC', 'WFT', 'WMB', 'WMT', 'WY', 'XOM', 'ZNGA']
+
+urllist = []
 for i in tickers:
-    url = 'https://api.iextrading.com/1.0/stock/' + i + '/chart/date/' + date2
-    print(url)
+     for dt in daterange(start_dt, end_dt):
+        url = 'https://api.iextrading.com/1.0/stock/' + i + '/chart/date/' + dt.strftime("%Y%m%d")
+        urllist.append(url)
 
+for u in urllist:
+    data = requests.get(u).json()
+    #time.sleep(.2)
+    #print(data)
 
-api_rows = []
-with open('30DayByMinute.csv') as file:
-    csv_reader = csv.reader(file, delimiter=',')
-    line_count = 0
-    for row in csv_reader:
-        api_rows.append(str(row).strip("['").strip("']"))
-        line_count += 1
-
-    for url in api_rows:
-        data = requests.get(url).json()
-        time.sleep(.2)
-        print()
-
+with open('dataoutput.csv', 'w') as dataoutput:
+    writer = csv.writer(dataoutput)
+    for key, value in data.items():
+        writer.writerow([key, value])
 
