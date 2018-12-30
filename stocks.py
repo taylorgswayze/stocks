@@ -20,13 +20,14 @@ for i in tickers:
         url = 'https://api.iextrading.com/1.0/stock/' + i + '/chart/date/' + dt.strftime("%Y%m%d")
         urllist.append(url)
 
+csv_columns=['date','minute','label','high','low','average','volume','notional','numberOfTrades','marketHigh','marketLow','marketAverage','marketAverage','marketVolume','marketNotional','marketNumberOfTrades','open','close','marketOpen','marketClose','changeOverTime','marketChangeOverTime']
+
 for u in urllist:
-    data = requests.get(u).json()
-    #time.sleep(.2)
-    #print(data)
+    dataset = requests.get(u).json()
+    with open('dataoutput.csv', 'w') as dataoutput:
+        writer = csv.DictWriter(dataoutput, fieldnames=csv_columns)
+        writer.writeheader()
+        for data in dataset:
+            writer.writerow(data)
 
-with open('dataoutput.csv', 'w') as dataoutput:
-    writer = csv.writer(dataoutput)
-    for key, value in data.items():
-        writer.writerow([key, value])
-
+print('success')
